@@ -12,16 +12,21 @@ namespace ManageStudent.Data.Configuration
                 .HasKey(a => a.Id);
 
             builder
-                .Property(m => m.Id)
+                .Property(c => c.Id)
                 .UseIdentityColumn();
             builder
-                .Property(m => m.Score);
+                .Property(c => c.Score);
                 
             builder
-                .Property(m => m.CourseName)
+                .Property(c => c.CourseName)
                 .IsRequired()
                 .HasMaxLength(50);
 
+            builder.HasOne(s => s.Student)
+                .WithMany(c => c.Courses)
+                .HasForeignKey(s => s.StudentId);
+
+            builder.ToTable("Musics");
             builder
                 .ToTable("Courses");
         }

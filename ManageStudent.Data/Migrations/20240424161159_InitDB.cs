@@ -2,7 +2,7 @@
 
 namespace ManageStudent.Data.Migrations
 {
-    public partial class initialDB : Migration
+    public partial class InitDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

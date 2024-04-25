@@ -9,21 +9,20 @@ namespace ManageStudent.Data.Configuration
         public void Configure(EntityTypeBuilder<Student> builder)
         {
             builder
-               .HasKey(m => m.Id);
+               .HasKey(s => s.Id);
 
             builder
-                .Property(m => m.Id)
+                .Property(s => s.Id)
                 .UseIdentityColumn();
 
             builder
-                .Property(m => m.Name)
+                .Property(s => s.Name)
                 .IsRequired()
                 .HasMaxLength(50);
-
             builder
-                .HasOne(m => m.Course)
-                .WithMany(a => a.Students)
-                .HasForeignKey(m => m.CourseId);
+                .Property(s => s.LastName)
+                .IsRequired()
+                .HasMaxLength(50);            
 
             builder
                 .ToTable("Students");

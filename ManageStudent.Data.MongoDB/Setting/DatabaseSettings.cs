@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace ManageStudent.Data.MongoDB.Setting
 {
-    public class DatabaseSettings : IDatabaseSettiongs
+    public class DatabaseSettings : IDatabaseSettings
     {
         private readonly IMongoDatabase _database;
         public DatabaseSettings(IOptions<Settings> options, IMongoClient client)

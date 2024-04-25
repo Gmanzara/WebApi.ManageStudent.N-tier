@@ -3,7 +3,7 @@ using MongoDB.Driver;
 
 namespace ManageStudent.Data.MongoDB.Setting
 {
-    public interface IDatabaseSettiongs
+    public interface IDatabaseSettings
     {
         IMongoCollection<Composer> Composers { get; }
     }
