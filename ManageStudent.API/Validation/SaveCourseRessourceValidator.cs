@@ -15,12 +15,7 @@ namespace ManageStudent.API.Validation
                 .NotEmpty()
                 .WithMessage("'Score' doit pas à nul")
                 .GreaterThanOrEqualTo(0)
-                .WithMessage("'Score' doit supérieur à 0");
-
-            RuleFor(c => c.StudentId)
-                .NotEmpty()
-                .GreaterThan(0)
-                .WithMessage("'Student Id' doit supérieur à 0");
+                .WithMessage("'Score' doit supérieur à 0");  
         }
     }
 

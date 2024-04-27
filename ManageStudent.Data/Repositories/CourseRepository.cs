@@ -18,43 +18,35 @@ namespace ManageStudent.Data.Repositories
         public async Task<IEnumerable<Course>> GetAllWithStudentAsync()
         {
             return await _dbManageStudentDbContext.courses
-                 .Include(c=>c.Student)    
-                .ToListAsync();
+                   .ToListAsync();
         }
 
         public async Task<Course> GetWithStudentByIdAsync(int id)
         {
             return await _dbManageStudentDbContext.courses
-                    .Include(s => s.Student)
                     .SingleOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<IEnumerable<Course>> GetAllWithStudentByStudentIdAsync(int studentId)
         {
             return await _dbManageStudentDbContext.courses
-                   .Include(s => s.Student)
-                   .Where(s => s.StudentId == studentId)
                    .ToListAsync();
         }
         async Task<IEnumerable<Course>> ICourseRepository.GetAllWithStudentAsync()
         {
             return await _dbManageStudentDbContext.courses
-                 .Include(c=>c.Student)    
                 .ToListAsync();
         }
 
         async Task<Course> ICourseRepository.GetWithStudentByIdAsync(int id)
         {
             return await _dbManageStudentDbContext.courses
-                    .Include(s => s.Student)
                     .SingleOrDefaultAsync(c => c.Id == id);
         }
 
         async Task<IEnumerable<Course>> ICourseRepository.GetAllWithStudentByStudentIdAsync(int studentId)
         {
             return await _dbManageStudentDbContext.courses
-                   .Include(s => s.Student)
-                   .Where(s => s.StudentId == studentId)
                    .ToListAsync();
         }
 

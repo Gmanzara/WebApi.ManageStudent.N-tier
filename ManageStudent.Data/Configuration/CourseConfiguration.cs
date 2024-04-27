@@ -22,11 +22,6 @@ namespace ManageStudent.Data.Configuration
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.HasOne(s => s.Student)
-                .WithMany(c => c.Courses)
-                .HasForeignKey(s => s.StudentId);
-
-            builder.ToTable("Musics");
             builder
                 .ToTable("Courses");
         }

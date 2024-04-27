@@ -116,7 +116,6 @@ namespace ManageStudent.API.Controllers
             if (course.CourseName != null)
             {
                 courseNew.Score = course.Score;
-                course.StudentId = course.StudentId;
             }
             var courseRessourceUpdate = _mapperServie.Map<Course,CourseRessource>(courseUpdate);
             return Ok(courseRessourceUpdate);

@@ -53,7 +53,6 @@ namespace ManageStudent.Services.Services
         {
             CourseToUpdate.CourseName = course.CourseName;
             CourseToUpdate.Score = course.Score;
-            CourseToUpdate.StudentId = course.StudentId;
             await _unitOfWork.CommitAsync();
         }
 

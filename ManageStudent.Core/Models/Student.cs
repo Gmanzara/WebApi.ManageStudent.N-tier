@@ -7,12 +7,12 @@ namespace ManageStudent.Core.Models
     {
         public Student() 
         {
-            Courses = new Collection<Course>();
+            Enrollments = new Collection<Enrollment>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        public ICollection<Course> Courses { get; set; }
+        public ICollection<Enrollment> Enrollments { get; set; }
     }
 }
 
