@@ -6,4 +6,5 @@
         public double Score { get; set; }
         public int StudentId { get; set; }
     }
+
 }

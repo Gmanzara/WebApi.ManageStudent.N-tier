@@ -88,8 +88,30 @@ namespace ManageStudent.API.Controllers
             if (Student == null) return BadRequest("le Student n'existe pas");
             //Mappage
             var StudentUpdate = _mapperServie.Map<SaveStudentRessource, Student>(saveStudentRessource);
-            await _studentService.UpdateStudent(StudentUpdate, Student);
-            var StudentRessourceUpdate = _mapperServie.Map<Student, StudentRessource>(StudentUpdate);
+            await _studentService.UpdateStudent(Student,StudentUpdate);
+            var StudentNew = await _studentService.GetStudentByIdAsync(id);
+            var StudentRessourceUpdate = _mapperServie.Map<Student, StudentRessource>(StudentNew);
+            return Ok(StudentRessourceUpdate);
+        }
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<StudentRessource>> UpdatePatchCreate(int id, UpdateStudentRessource updateStudentRessource)
+        {
+            //Validation
+            var validation = new UpdateStudentRessourceValidator();
+
+            var validationResult = await validation.ValidateAsync(updateStudentRessource);
+
+            if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+
+            //Create de couurse
+            var Student = await _studentService.GetStudentByIdAsync(id);
+            
+            if (Student == null) return BadRequest("le Student n'existe pas");
+            //Mappage
+            var StudentUpdate = _mapperServie.Map<UpdateStudentRessource, Student>(updateStudentRessource);
+            await _studentService.UpdateStudent(Student,StudentUpdate);
+            var StudentNew = await _studentService.GetStudentByIdAsync(id);
+            var StudentRessourceUpdate = _mapperServie.Map<Student, StudentRessource>(StudentNew);
             return Ok(StudentRessourceUpdate);
         }
 

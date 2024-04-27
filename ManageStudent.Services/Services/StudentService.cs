@@ -44,8 +44,8 @@ namespace ManageStudent.Services.Services
             studentToUpdate.Name = student.Name;
             studentToUpdate.LastName = student.LastName;
 
-
             await _unitOfWork.CommitAsync();
+
         }
         public async Task<IEnumerable<Student>> GetAllStudentWithCourseId(int courseId)
         {

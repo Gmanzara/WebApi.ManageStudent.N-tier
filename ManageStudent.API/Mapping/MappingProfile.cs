@@ -12,7 +12,9 @@ namespace ManageStudent.API.Mapping
             CreateMap<Course, CourseRessource>().ReverseMap() ;
             CreateMap<Student,StudentRessource>().ReverseMap();
             CreateMap<Course, SaveCourseRessource>().ReverseMap();
+            CreateMap<Course, UpdateCourseRessource>().ReverseMap();
             CreateMap<Student, SaveStudentRessource>().ReverseMap();
+            CreateMap<Student, UpdateStudentRessource>().ReverseMap();
             CreateMap<Composer, ComposerRessource>().ReverseMap() ;
             CreateMap<Composer, SaveComposerRessource>().ReverseMap();
 

@@ -8,7 +8,7 @@ namespace ManageStudent.Data
     {
         public DbSet<Student> students {  get; set; }
         public DbSet<Course> courses { get; set;}
-
+        public DbSet<User> Users { get; set; }
         public ManageStudentDbContext( DbContextOptions<ManageStudentDbContext> options):base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -18,6 +18,9 @@ namespace ManageStudent.Data
                
             builder
                 .ApplyConfiguration(new CourseConfiguration() );
+
+            builder
+                .ApplyConfiguration(new UserConfiguration() );
         }
     }
 }

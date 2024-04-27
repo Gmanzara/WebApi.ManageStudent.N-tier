@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using ManageStudent.API.Ressources;
 using ManageStudent.API.Validation;
 using ManageStudent.Core.Models;
@@ -89,7 +90,34 @@ namespace ManageStudent.API.Controllers
             if (course == null) return BadRequest("le course n'existe pas");
             //Mappage
             var courseUpdate = _mapperServie.Map<SaveCourseRessource,Course>(saveCourseRessource);
-            await _courseService.UpdateCourse(courseUpdate, course);
+            await _courseService.UpdateCourse(course,courseUpdate);
+            var courseNew = await _courseService.GetCourseById(id);
+            var courseRessourceUpdate = _mapperServie.Map<Course,CourseRessource>(courseUpdate);
+            return Ok(courseRessourceUpdate);
+        }
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<CourseRessource>> UpdatePathCreate(int id,UpdateCourseRessource updateCourseRessource)
+        {
+            //Validation
+            var validation = new UpdateCourseRessourceValidator();
+
+            var validationResult =  await validation.ValidateAsync(updateCourseRessource);
+
+            if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+
+            //Create de couurse
+            var course = await _courseService.GetCourseById(id);
+            if (course == null) return BadRequest("le course n'existe pas");
+           
+            //Mappage
+            var courseUpdate = _mapperServie.Map<UpdateCourseRessource,Course>(updateCourseRessource);
+            await _courseService.UpdateCourse(course,courseUpdate);
+            var courseNew = await _courseService.GetCourseById(id);
+            if (course.CourseName != null)
+            {
+                courseNew.Score = course.Score;
+                course.StudentId = course.StudentId;
+            }
             var courseRessourceUpdate = _mapperServie.Map<Course,CourseRessource>(courseUpdate);
             return Ok(courseRessourceUpdate);
         }
