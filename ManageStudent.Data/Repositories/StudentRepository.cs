@@ -15,47 +15,33 @@ namespace ManageStudent.Data.Repositories
             _dbManageStudentContext = dbManageStudentContext;
         }
 
+        public async Task<IEnumerable<Student>> GetAllStudentWithCourseAsync()
+        {
+            return await _dbManageStudentContext.students
+                   .Include(c=>c.Courses)
+                   .ToListAsync();
+        }
         public async Task<Student> GetAllCourseByIdAsync(int id)
         {
             return await _dbManageStudentContext.students
-                .Include(c => c.Course)
-                .SingleOrDefaultAsync(c => c.Id == id);
+                   .Include(c => c.Courses)
+                   .SingleOrDefaultAsync(c => c.Id == id);
         }
-
-        public async Task<IEnumerable<Student>> GetAllStudentWithCourse()
+        async Task<IEnumerable<Student>> IStudentRepository.GetAllStudentWithCourseAsync()
         {
             return await _dbManageStudentContext.students
-                .Include(m=>m.Course)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Student>> GetAllWithCourseByCourseId(int courseId)
-        {
-            return await _dbManageStudentContext.students
-                .Include(c => c.Course)
-                .Where(c => c.CourseId == courseId)
-                .ToListAsync();
+                   .Include(c=>c.Courses)
+                   .ToListAsync();
         }
         async Task<Student> IStudentRepository.GetAllCourseByIdAsync(int id)
         {
             return await _dbManageStudentContext.students
-                .Include(c => c.Course)
-                .SingleOrDefaultAsync(c => c.Id == id);
+                   .Include(c => c.Courses)
+                   .SingleOrDefaultAsync(c => c.Id == id);
         }
-
-        async Task<IEnumerable<Student>> IStudentRepository.GetAllStudentWithCourseAsync()
+        public Task<IEnumerable<Student>> GetAllWithCourseByCourseIdAsync(int courseId)
         {
-            return await _dbManageStudentContext.students
-                .Include(m => m.Course)
-                .ToListAsync();
-        }
-
-        async Task<IEnumerable<Student>> IStudentRepository.GetAllWithCourseByCourseIdAsync(int courseId)
-        {
-            return await _dbManageStudentContext.students
-                .Include(c => c.Course)
-                .Where(c => c.CourseId == courseId)
-                .ToListAsync();
+            throw new System.NotImplementedException();
         }
     }
 }

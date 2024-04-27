@@ -15,23 +15,54 @@ namespace ManageStudent.Data.Repositories
             _dbManageStudentDbContext = dbManageStudentDbContext;
         }
 
-        public Task<double> CalculateAverageByCourseAsync(int studentId, Course course)
+        public async Task<IEnumerable<Course>> GetAllWithStudentAsync()
         {
-            throw new System.NotImplementedException();
+            return await _dbManageStudentDbContext.courses
+                 .Include(c=>c.Student)    
+                .ToListAsync();
         }
 
-        public async Task<Student> GetAllCoursesByIdAsync(int id)
+        public async Task<Course> GetWithStudentByIdAsync(int id)
         {
-            return await _dbManageStudentDbContext.students
-                    .Include(s => s.Courses)
+            return await _dbManageStudentDbContext.courses
+                    .Include(s => s.Student)
+                    .SingleOrDefaultAsync(s => s.Id == id);
+        }
+
+        public async Task<IEnumerable<Course>> GetAllWithStudentByStudentIdAsync(int studentId)
+        {
+            return await _dbManageStudentDbContext.courses
+                   .Include(s => s.Student)
+                   .Where(s => s.StudentId == studentId)
+                   .ToListAsync();
+        }
+        async Task<IEnumerable<Course>> ICourseRepository.GetAllWithStudentAsync()
+        {
+            return await _dbManageStudentDbContext.courses
+                 .Include(c=>c.Student)    
+                .ToListAsync();
+        }
+
+        async Task<Course> ICourseRepository.GetWithStudentByIdAsync(int id)
+        {
+            return await _dbManageStudentDbContext.courses
+                    .Include(s => s.Student)
                     .SingleOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<IEnumerable<Student>> GetAllCourseWithStudentAsync()
+        async Task<IEnumerable<Course>> ICourseRepository.GetAllWithStudentByStudentIdAsync(int studentId)
         {
-             return await _dbManageStudentDbContext.students
-                    .Include(s => s.Courses)
-                    .ToListAsync();
+            return await _dbManageStudentDbContext.courses
+                   .Include(s => s.Student)
+                   .Where(s => s.StudentId == studentId)
+                   .ToListAsync();
         }
+
+        public async Task<double> CalculateAverageByCourseAsync(int studentId, List<Course> courses)
+        {
+            var coursesStudentId = GetAllWithStudentByStudentIdAsync(studentId);
+            return 0;
+        }
+
     }
 }

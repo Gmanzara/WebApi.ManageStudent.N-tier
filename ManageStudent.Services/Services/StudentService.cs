@@ -29,6 +29,29 @@ namespace ManageStudent.Services.Services
             await _unitOfWork.CommitAsync();
         }
 
+        public async Task<IEnumerable<Student>> GetAllWithStudent()
+        {
+            return await _unitOfWork.Students.GetAllAsync();
+        }
+
+        public async Task<Student> GetStudentByIdAsync(int id)
+        {
+            return await _unitOfWork.Students.GetByIdAsync(id);
+        }
+     
+        public async Task UpdateStudent(Student studentToUpdate, Student student)
+        {
+            studentToUpdate.Name = student.Name;
+            studentToUpdate.LastName = student.LastName;
+
+
+            await _unitOfWork.CommitAsync();
+        }
+        public async Task<IEnumerable<Student>> GetAllStudentWithCourseId(int courseId)
+        {
+            return await _unitOfWork.Students
+                .GetAllWithCourseByCourseIdAsync(courseId);
+        }
         public Task<Student> GetAllCourseByIdAsync(int id)
         {
             throw new NotImplementedException();
@@ -40,18 +63,5 @@ namespace ManageStudent.Services.Services
                 .GetAllStudentWithCourseAsync();
         }
 
-        public async Task<IEnumerable<Student>> GetAllStudentWithCourseId(int courseId)
-        {
-            return await _unitOfWork.Students
-                .GetAllWithCourseByCourseIdAsync(courseId);
-        }
-
-        public async Task UpdateStudent(Student studentToUpdate, Student student)
-        {
-           studentToUpdate.Name = student.Name;
-           studentToUpdate.CourseId = student.CourseId;
-
-            await _unitOfWork.CommitAsync();
-        }
     }
 }

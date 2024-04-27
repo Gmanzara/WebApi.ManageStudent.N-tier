@@ -35,7 +35,12 @@ namespace ManageStudent.Data.Migrations
                     b.Property<double>("Score")
                         .HasColumnType("float");
 
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Courses");
                 });
@@ -49,8 +54,10 @@ namespace ManageStudent.Data.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -59,16 +66,14 @@ namespace ManageStudent.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
-
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("ManageStudent.Core.Models.Student", b =>
+            modelBuilder.Entity("ManageStudent.Core.Models.Course", b =>
                 {
-                    b.HasOne("ManageStudent.Core.Models.Course", "Course")
-                        .WithMany("Students")
-                        .HasForeignKey("CourseId")
+                    b.HasOne("ManageStudent.Core.Models.Student", "Student")
+                        .WithMany("Courses")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

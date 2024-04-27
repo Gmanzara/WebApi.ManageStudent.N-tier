@@ -1,3 +1,4 @@
+using AutoMapper;
 using ManageStudent.Core;
 using ManageStudent.Core.Repositories;
 using ManageStudent.Core.Services;
@@ -40,11 +41,11 @@ namespace ManageStudent.API
             services.Configure<Settings>(
             options =>
             {
-                options.ConnectionString = Configuration.GetValue<string>("MongoDB:ConnectionString");
+                options.ConnectionString = Configuration.GetValue<string>("MongoDB:Default");
                 options.Database = Configuration.GetValue<string>("MongoDB:Database");
             });
             services.AddSingleton<IMongoClient,MongoClient>(
-            _=> new MongoClient(Configuration.GetValue<string>("MongoDB:ConnectionString")));
+            _=> new MongoClient(Configuration.GetValue<string>("MongoDB:Default")));
 
             services.AddScoped<IComposerRepository,ComposerRepository>();
             services.AddTransient<IDatabaseSettings,DatabaseSettings>();
@@ -59,6 +60,9 @@ namespace ManageStudent.API
                 c.SwaggerDoc("v1", new OpenApiInfo
                 { Title = "Controller Manage Student", Description = "DotNet Core Api 3 - with swagger" });
             });
+
+            //AutoMapper
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

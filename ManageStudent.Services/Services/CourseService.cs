@@ -21,6 +21,11 @@ namespace ManageStudent.Services.Services
             throw new NotImplementedException();
         }
 
+        public Task<double> CalculateAverageByCourseAsync(int CourseId, List<Course> courses)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Course> CreateCourse(Course course)
         {
             await _unitOfWork.Courses.AddAsync(course);
@@ -39,11 +44,6 @@ namespace ManageStudent.Services.Services
             return _unitOfWork.Courses.GetAllAsync();
         }
 
-        public Task<IEnumerable<Course>> GetAllCourseWithCourseId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Course> GetCourseById(int id)
         {
            return await _unitOfWork.Courses.GetByIdAsync(id);
@@ -53,7 +53,25 @@ namespace ManageStudent.Services.Services
         {
             CourseToUpdate.CourseName = course.CourseName;
             CourseToUpdate.Score = course.Score;
+            CourseToUpdate.StudentId = course.StudentId;
             await _unitOfWork.CommitAsync();
+        }
+
+        public Task<IEnumerable<Course>> GetAllCourseWithCourseId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Course>> GetAllCourseWithStudentId(int StudentId)
+        {
+            return await _unitOfWork.Courses
+                    .GetAllWithStudentByStudentIdAsync(StudentId);
+        }
+
+        public async Task<IEnumerable<Course>> GetAllWithStudent()
+        {
+            return await _unitOfWork.Courses
+                    .GetAllWithStudentAsync();
         }
     }
 }

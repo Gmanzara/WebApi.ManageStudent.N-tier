@@ -6,8 +6,9 @@ namespace ManageStudent.Core.Repositories
 {
     public interface ICourseRepository : IRepository<Course>
     {
-        Task<IEnumerable<Student>> GetAllCourseWithStudentAsync();
-        Task<Student> GetAllCoursesByIdAsync(int id);
-        Task<double> CalculateAverageByCourseAsync(int studentId,int courseId);
+        Task<IEnumerable<Course>> GetAllWithStudentAsync();
+        Task<Course> GetWithStudentByIdAsync(int id);
+        Task<IEnumerable<Course>> GetAllWithStudentByStudentIdAsync(int studentId);
+        Task<double> CalculateAverageByCourseAsync(int studentId,List<Course> courses);
     }
 }
