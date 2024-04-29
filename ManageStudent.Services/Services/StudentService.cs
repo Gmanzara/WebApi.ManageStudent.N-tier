@@ -47,21 +47,5 @@ namespace ManageStudent.Services.Services
             await _unitOfWork.CommitAsync();
 
         }
-        public async Task<IEnumerable<Student>> GetAllStudentWithCourseId(int courseId)
-        {
-            return await _unitOfWork.Students
-                .GetAllWithCourseByCourseIdAsync(courseId);
-        }
-        public Task<Student> GetAllCourseByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<Student>> GetAllStudentWithCourse()
-        {
-            return await _unitOfWork.Students
-                .GetAllStudentWithCourseAsync();
-        }
-
     }
 }

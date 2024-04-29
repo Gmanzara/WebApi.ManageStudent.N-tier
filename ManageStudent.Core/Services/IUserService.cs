@@ -7,7 +7,7 @@ namespace ManageStudent.Core.Services
     public interface IUserService
     {
         Task<User> Authenticate(string username, string password);
-        Task<User> Create(User user, string password);
+        Task<User> Create(User user);
         void Update(User user, string password = null);
         void Delete(int id);
         Task<IEnumerable<User>> GetAll();

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ManageStudent.Data.Migrations
 {
     [DbContext(typeof(ManageStudentDbContext))]
-    [Migration("20240427090916_AddUser")]
-    partial class AddUser
+    [Migration("20240427134153_Update Database")]
+    partial class UpdateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,14 +38,36 @@ namespace ManageStudent.Data.Migrations
                     b.Property<double>("Score")
                         .HasColumnType("float");
 
+                    b.HasKey("Id");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("ManageStudent.Core.Models.Enrollment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Enrollments");
                 });
 
             modelBuilder.Entity("ManageStudent.Core.Models.Student", b =>
@@ -110,10 +132,16 @@ namespace ManageStudent.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ManageStudent.Core.Models.Course", b =>
+            modelBuilder.Entity("ManageStudent.Core.Models.Enrollment", b =>
                 {
+                    b.HasOne("ManageStudent.Core.Models.Course", "Course")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ManageStudent.Core.Models.Student", "Student")
-                        .WithMany("Courses")
+                        .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -25,16 +25,6 @@ namespace ManageStudent.Data.Repositories
             return await _dbManageStudentContext.students
                    .SingleOrDefaultAsync(c => c.Id == id);
         }
-        async Task<IEnumerable<Student>> IStudentRepository.GetAllStudentWithCourseAsync()
-        {
-            return await _dbManageStudentContext.students
-                   .ToListAsync();
-        }
-        async Task<Student> IStudentRepository.GetAllCourseByIdAsync(int id)
-        {
-            return await _dbManageStudentContext.students
-                   .SingleOrDefaultAsync(c => c.Id == id);
-        }
         public Task<IEnumerable<Student>> GetAllWithCourseByCourseIdAsync(int courseId)
         {
             throw new System.NotImplementedException();

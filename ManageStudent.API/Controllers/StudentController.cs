@@ -74,7 +74,7 @@ namespace ManageStudent.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<StudentRessource>> UpdateCreate(int id, SaveStudentRessource saveStudentRessource)
+        public async Task<ActionResult<StudentRessource>> UpdateStudent(int id, SaveStudentRessource saveStudentRessource)
         {
             //Validation
             var validation = new SaveStudentRessourceValidator();
@@ -94,27 +94,26 @@ namespace ManageStudent.API.Controllers
             return Ok(StudentRessourceUpdate);
         }
         [HttpPatch("{id}")]
-        public async Task<ActionResult<StudentRessource>> UpdatePatchCreate(int id, UpdateStudentRessource updateStudentRessource)
+        public async Task<ActionResult<StudentRessource>> UpdatePathStudent(int id, SaveStudentRessource saveStudentRessource)
         {
             //Validation
-            var validation = new UpdateStudentRessourceValidator();
+            var validation = new SaveStudentRessourceValidator();
 
-            var validationResult = await validation.ValidateAsync(updateStudentRessource);
+            var validationResult = await validation.ValidateAsync(saveStudentRessource);
 
             if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
 
             //Create de couurse
             var Student = await _studentService.GetStudentByIdAsync(id);
-            
             if (Student == null) return BadRequest("le Student n'existe pas");
             //Mappage
-            var StudentUpdate = _mapperServie.Map<UpdateStudentRessource, Student>(updateStudentRessource);
+            var StudentUpdate = _mapperServie.Map<SaveStudentRessource, Student>(saveStudentRessource);
             await _studentService.UpdateStudent(Student,StudentUpdate);
             var StudentNew = await _studentService.GetStudentByIdAsync(id);
             var StudentRessourceUpdate = _mapperServie.Map<Student, StudentRessource>(StudentNew);
             return Ok(StudentRessourceUpdate);
         }
-
+     
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMusic(int id)
         {

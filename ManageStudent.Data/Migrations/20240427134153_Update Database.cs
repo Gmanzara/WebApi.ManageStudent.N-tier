@@ -3,10 +3,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ManageStudent.Data.Migrations
 {
-    public partial class AddUser : Migration
+    public partial class UpdateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CourseName = table.Column<string>(maxLength: 50, nullable: false),
+                    Score = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
@@ -40,20 +54,26 @@ namespace ManageStudent.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Courses",
+                name: "Enrollments",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CourseName = table.Column<string>(maxLength: 50, nullable: false),
-                    Score = table.Column<double>(nullable: false),
+                    Score = table.Column<int>(nullable: false),
+                    CourseId = table.Column<int>(nullable: false),
                     StudentId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.PrimaryKey("PK_Enrollments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_Students_StudentId",
+                        name: "FK_Enrollments_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Enrollments_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
@@ -61,18 +81,26 @@ namespace ManageStudent.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_StudentId",
-                table: "Courses",
+                name: "IX_Enrollments_CourseId",
+                table: "Enrollments",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollments_StudentId",
+                table: "Enrollments",
                 column: "StudentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "Enrollments");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "Students");

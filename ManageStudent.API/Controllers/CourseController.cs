@@ -76,7 +76,7 @@ namespace ManageStudent.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<CourseRessource>> UpdateCreate(int id,SaveCourseRessource saveCourseRessource)
+        public async Task<ActionResult<CourseRessource>> UpdateCuurse(int id,SaveCourseRessource saveCourseRessource)
         {
             //Validation
             var validation = new SaveCourseRessourceValidator();
@@ -95,32 +95,28 @@ namespace ManageStudent.API.Controllers
             var courseRessourceUpdate = _mapperServie.Map<Course,CourseRessource>(courseUpdate);
             return Ok(courseRessourceUpdate);
         }
+          
         [HttpPatch("{id}")]
-        public async Task<ActionResult<CourseRessource>> UpdatePathCreate(int id,UpdateCourseRessource updateCourseRessource)
+        public async Task<ActionResult<CourseRessource>> UpdatePatchCourse(int id,SaveCourseRessource saveCourseRessource)
         {
             //Validation
-            var validation = new UpdateCourseRessourceValidator();
+            var validation = new SaveCourseRessourceValidator();
 
-            var validationResult =  await validation.ValidateAsync(updateCourseRessource);
+            var validationResult =  await validation.ValidateAsync(saveCourseRessource);
 
             if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
 
             //Create de couurse
             var course = await _courseService.GetCourseById(id);
             if (course == null) return BadRequest("le course n'existe pas");
-           
             //Mappage
-            var courseUpdate = _mapperServie.Map<UpdateCourseRessource,Course>(updateCourseRessource);
+            var courseUpdate = _mapperServie.Map<SaveCourseRessource,Course>(saveCourseRessource);
             await _courseService.UpdateCourse(course,courseUpdate);
             var courseNew = await _courseService.GetCourseById(id);
-            if (course.CourseName != null)
-            {
-                courseNew.Score = course.Score;
-            }
             var courseRessourceUpdate = _mapperServie.Map<Course,CourseRessource>(courseUpdate);
             return Ok(courseRessourceUpdate);
         }
-
+       
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMusic(int id)
         {

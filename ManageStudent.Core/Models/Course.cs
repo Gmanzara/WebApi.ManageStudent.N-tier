@@ -11,7 +11,6 @@ namespace ManageStudent.Core.Models
         }
         public int Id { get; set; }
         public string CourseName { get; set; }
-        public double Score { get; set; }
         public ICollection<Enrollment> Enrollments  { get; set; }
     }
 }

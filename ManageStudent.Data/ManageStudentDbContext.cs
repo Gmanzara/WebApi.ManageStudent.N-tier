@@ -8,6 +8,7 @@ namespace ManageStudent.Data
     {
         public DbSet<Student> students {  get; set; }
         public DbSet<Course> courses { get; set;}
+        public DbSet<Enrollment> enrollments { get; set;}
         public DbSet<User> Users { get; set; }
         public ManageStudentDbContext( DbContextOptions<ManageStudentDbContext> options):base(options) { }
 
@@ -18,6 +19,8 @@ namespace ManageStudent.Data
                
             builder
                 .ApplyConfiguration(new CourseConfiguration() );
+            builder
+                .ApplyConfiguration(new EnrollmentConfiguration() );
 
             builder
                 .ApplyConfiguration(new UserConfiguration() );

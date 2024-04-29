@@ -29,6 +29,11 @@ namespace ManageStudent.Services.Services
             return user;
         }
 
+        public Task<User> Create(User user)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(int id)
         {
             _unitOfWork.Users.Delete(id);

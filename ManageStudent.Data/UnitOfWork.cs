@@ -14,6 +14,7 @@ namespace ManageStudent.Data
         private readonly ManageStudentDbContext _dbManageStudentDbContext;
         private readonly IStudentRepository _studentRepository;
         private readonly ICourseRepository _courseRepository;
+        private readonly IEnrollmentRepository _enrollmentRepository;
         private readonly IUserRepository _userRepository;
         public UnitOfWork(ManageStudentDbContext dbManageStudentDbContext)
         {
@@ -22,6 +23,7 @@ namespace ManageStudent.Data
         }
         public IStudentRepository Students => _studentRepository ?? new StudentRepository(_dbManageStudentDbContext);
         public ICourseRepository Courses => _courseRepository ?? new CourseRepository(_dbManageStudentDbContext);
+        public IEnrollmentRepository Enrollments => _enrollmentRepository ?? new EnrollmentRepository(_dbManageStudentDbContext);
         public IUserRepository Users => _userRepository ?? new UserRepository(_dbManageStudentDbContext);
 
         public async Task<int> CommitAsync()

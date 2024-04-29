@@ -8,6 +8,7 @@ namespace ManageStudent.Core
     {
         ICourseRepository Courses { get; }
         IStudentRepository Students { get; }
+        IEnrollmentRepository Enrollments { get; }
         IUserRepository Users { get; }
         Task<int > CommitAsync();
     }

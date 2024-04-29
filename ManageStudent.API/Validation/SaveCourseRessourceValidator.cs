@@ -11,11 +11,11 @@ namespace ManageStudent.API.Validation
                 .NotEmpty()
                 .MaximumLength(50);
 
-            RuleFor(c => c.Score)
-                .NotEmpty()
-                .WithMessage("'Score' doit pas à nul")
-                .GreaterThanOrEqualTo(0)
-                .WithMessage("'Score' doit supérieur à 0");  
+            //RuleFor(c => c.Score)
+            //    .NotEmpty()
+            //    .WithMessage("'Score' doit pas à nul")
+            //    .GreaterThanOrEqualTo(0)
+            //    .WithMessage("'Score' doit supérieur à 0");  
         }
     }
 

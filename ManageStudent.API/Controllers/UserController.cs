@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using System;
 using ManageStudent.API.Ressources;
 using System.IdentityModel.Tokens.Jwt;
+using ManageStudent.API.Validation;
+using ManageStudent.Services.Services;
+using FluentValidation;
+using ManageStudent.Core.Models;
 
 namespace ManageStudent.API.Controllers
 {
@@ -17,22 +21,24 @@ namespace ManageStudent.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _serviceUser;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
         private readonly Microsoft.Extensions.Configuration.IConfiguration _config;
 
-        public UserController(IUserService serviceUser, IMapper mapper,
+        public UserController(IUserService userService, IMapper mapper,
             Microsoft.Extensions.Configuration.IConfiguration config)
         {
-            _serviceUser = serviceUser;
+            _userService = userService;
             _mapper = mapper;
             _config = config;
         }
 
+        
+
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(UserRessource userRessource)
         {
-            var user = await _serviceUser.Authenticate(userRessource.UserName, userRessource.Password);
+            var user = await _userService.Authenticate(userRessource.UserName, userRessource.Password);
             if (user == null) return BadRequest(new { message = "Username or password is incorrect" });
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -50,7 +56,7 @@ namespace ManageStudent.API.Controllers
             var tokenString = tokenHandler.WriteToken(token);
             return Ok(new
             {
-                Id = user.Id,
+                Id = user.Id,   
                 Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,

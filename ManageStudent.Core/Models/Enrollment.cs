@@ -3,9 +3,10 @@
     public class Enrollment
     {
         public int Id { get; set; }
-        public int CourseId1 { get; set; }
-        public int StudentId2 { get; set; }
-        public Student Student1 { get; set; }
-        public Course Course1 { get; set; }
+        public decimal Score { get; set; }
+        public int CourseId { get; set; }
+        public int StudentId { get; set; }
+        public Student Student { get; set; }
+        public Course Course { get; set; }
     }
 }

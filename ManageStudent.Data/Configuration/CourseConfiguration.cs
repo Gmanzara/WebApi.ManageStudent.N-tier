@@ -14,8 +14,6 @@ namespace ManageStudent.Data.Configuration
             builder
                 .Property(c => c.Id)
                 .UseIdentityColumn();
-            builder
-                .Property(c => c.Score);
                 
             builder
                 .Property(c => c.CourseName)
@@ -25,5 +23,5 @@ namespace ManageStudent.Data.Configuration
             builder
                 .ToTable("Courses");
         }
-    }
+    }  
 }

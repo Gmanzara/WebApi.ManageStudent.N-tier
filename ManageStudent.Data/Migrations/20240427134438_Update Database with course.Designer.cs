@@ -4,14 +4,16 @@ using ManageStudent.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ManageStudent.Data.Migrations
 {
     [DbContext(typeof(ManageStudentDbContext))]
-    partial class ManageStudentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240427134438_Update Database with course")]
+    partial class UpdateDatabasewithcourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,8 +52,8 @@ namespace ManageStudent.Data.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Score")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");

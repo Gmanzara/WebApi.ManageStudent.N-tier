@@ -52,13 +52,14 @@ namespace ManageStudent.API
 
             services.AddTransient<IStudentService,StudentService>();
             services.AddTransient<ICourseService,CourseService>();
+            services.AddTransient<IEnrollmentService,EnrollmentService>();
             services.AddTransient<IComposerService,ComposerService>();
 
             //Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
-                { Title = "Controller Manage Student", Description = "DotNet Core Api 3 - with swagger" });
+                { Title = "API Manage Student", Description = "DotNet Core Api 3 - with swagger" });
             });
 
             //AutoMapper
